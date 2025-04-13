@@ -1,4 +1,3 @@
 *.idea
-docs/swagger*
+docs
 go.sum
-*docs
