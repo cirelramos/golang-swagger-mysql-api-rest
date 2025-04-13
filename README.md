@@ -28,7 +28,8 @@ go get -u github.com/gorilla/mux && \
 go install github.com/swaggo/swag/cmd/swag && \
 go get -u github.com/swaggo/http-swagger && \
 go get -u github.com/swaggo/swag/example/celler/docs && \
-go get -u github.com/go-sql-driver/mysql
+go get -u github.com/go-sql-driver/mysql && \
+go get -u github.com/joho/godotenv
 ```
 
 ``` bash

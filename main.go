@@ -10,8 +10,10 @@ import (
 
 	_ "github.com/go-sql-driver/mysql" // Import the MySQL driver
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv" // Import the godotenv package
 	"github.com/swaggo/http-swagger"
-	_ "golang-api-rest-swagger/docs" // Import the generated docs
+	_ "github.com/swaggo/swag/example/celler/docs" // Import the generated docs
+	"os"
 )
 
 // Book struct to hold book details.  The `json` tags are for JSON serialization,
@@ -29,30 +31,37 @@ var db *sql.DB
 // initDB initializes the database connection.  It should be called only once
 // during the application's startup.
 func initDB() {
-	// IMPORTANT:  Replace with your actual database credentials.
-	//             It is VERY BAD PRACTICE to hardcode credentials in your source code.
-	//             Use environment variables or a configuration file.
-	const dbUser = "your_mysql_username"      // e.g., "root"
-	const dbPass = "your_mysql_password"      // e.g., "password"
-	const dbName = "your_mysql_database_name" // e.g., "bookstore"
-	const dbHost = "localhost"                // e.g., "localhost" or "127.0.0.1"
-	const dbPort = "3306"                     // The default MySQL port
+	// Load environment variables from .env file.
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 
-	// Construct the connection string.  This is the standard format.
+	// Retrieve database credentials from environment variables.
+	dbUser := os.Getenv("MYSQL_USER")
+	dbPass := os.Getenv("MYSQL_PASSWORD")
+	dbName := os.Getenv("MYSQL_DATABASE")
+	dbHost := os.Getenv("MYSQL_HOST")
+	dbPort := os.Getenv("MYSQL_PORT")
+
+	// Check if the environment variables are set.
+	if dbUser == "" || dbPass == "" || dbName == "" || dbHost == "" || dbPort == "" {
+		log.Fatalf("Database credentials not set in .env file")
+	}
+
+	// Construct the connection string.
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
 
 	// Connect to the database.
-	var err error
 	db, err = sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
 	// Set maximum number of connections.
-	db.SetMaxOpenConns(10) //  Adjust as needed.
-	db.SetMaxIdleConns(5)  // Adjust as needed.
-	// See https://github.com/go-sql-driver/mysql#important-settings for details
-	db.SetConnMaxLifetime(0) // 0 means reuse connections forever.  Good for long-running apps.
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(5)
+	db.SetConnMaxLifetime(0)
 
 	// Check if the connection is working.
 	if err = db.Ping(); err != nil {
