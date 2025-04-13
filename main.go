@@ -12,7 +12,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv" // Import the godotenv package
 	"github.com/swaggo/http-swagger"
-	_ "github.com/swaggo/swag/example/celler/docs" // Import the generated docs
+	_ "golang-api-rest-swagger/docs" // Import the generated docs
 	"os"
 )
 
