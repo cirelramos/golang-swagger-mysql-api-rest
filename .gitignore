@@ -1,0 +1,4 @@
+*.idea
+docs/swagger*
+go.sum
+*docs
