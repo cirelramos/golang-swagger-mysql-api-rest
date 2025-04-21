@@ -3,7 +3,7 @@ package routes
 import (
 	"database/sql"
 	"github.com/gorilla/mux"
-	"golang-api-rest-swagger/controllers" // Import the models package
+	"golang-api-rest-swagger/Core/Books/controllers"
 	"net/http"
 )
 

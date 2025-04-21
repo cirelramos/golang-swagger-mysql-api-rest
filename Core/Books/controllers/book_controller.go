@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"golang-api-rest-swagger/models" // Import the models package
+	"golang-api-rest-swagger/Core/Books/models" // Import the models package
 	"net/http"
 	"strconv"
 )

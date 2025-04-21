@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/gorilla/mux"
 	"github.com/swaggo/http-swagger"
-	"golang-api-rest-swagger/database"
+	"golang-api-rest-swagger/Core/Books/database"
+	"golang-api-rest-swagger/Core/Books/routes"
 	_ "golang-api-rest-swagger/docs" // Import the generated docs
-	"golang-api-rest-swagger/routes"
 	"log"
 	"net/http"
 )
